@@ -1,22 +1,15 @@
 from deck_of_cards import deck_of_cards
 
 # creating picture path
-suits = {0: "S", 1: "H", 2: "D", 3: "C"}
+suits_set = {0: "S", 1: "H", 2: "D", 3: "C"}
 ranks = {1: "A", 11: "J", 12: "Q", 13: "K"}
-for suit in range(4):
-    for rank in range(1, 14):
-        card = deck_of_cards.Card((suit, rank))
-        card.image_path = "/PNG/" + \
-            str(rank if ranks.get(rank) is None else ranks.get(
-                rank)) + suits.get(suit) + ".png"
-        if rank == 1:
-            card.value = 14
-
 
 class ride_the_bus_game:
     suits = {"S": 0, "H": 1, "D": 2, "C": 3}
     black_cards = [0, 3]
     red_cards = [1, 2]
+    suits_set = {0: "S", 1: "H", 2: "D", 3: "C"}
+    ranks = {1: "A", 11: "J", 12: "Q", 13: "K"}
 
     def __init__(self):
         self.table = []
@@ -97,28 +90,36 @@ class ride_the_bus_game:
         if len(self.deck_obj.deck) == 0:
             self.deck_obj = deck_of_cards.DeckOfCards()
             self.number_decks += 1
-        return self.deck_obj.give_random_card()
+        card = self.deck_obj.give_random_card() 
+        card.image_path = "/PNG/" + \
+        str(card.rank if ranks.get(card.rank) is None else ranks.get(
+            card.rank)) + suits_set.get(card.suit) + ".png"
+        if card.rank == 1:
+            card.value = 14
+        return card
 
     def ride_the_bus(self):
         playing = True
-        print("playing")
         while playing:
             self.table.append(self.draw_card())
             print(self.table[0].name)
+            print(self.table[0].image_path)
             if(self.black_or_red(False)):
                 self.table.append(self.draw_card())
                 print(self.table[1].name)
+                print(self.table[1].image_path)
                 if(self.higher_or_lower(True)):
                     self.table.append(self.draw_card())
                     print(self.table[2].name)
+                    print(self.table[2].image_path)
                     if(self.inbetween_outside(0)):
                         self.table.append(self.draw_card())
                         print(self.table[3].name)
+                        print(self.table[3].image_path)
                         if(self.suit(self.suits.get("H"))):
                             playing = False
         print("got off bus after " + str(self.number_decks) + " decks and " + str(self.trys) + " trys")
 
 if __name__ == "__main__":
-    print("test")
     game = ride_the_bus_game()
     game.ride_the_bus()
