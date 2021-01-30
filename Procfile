@@ -1,1 +1,1 @@
-release: python3 bot.py
+main: python3 bot.py
