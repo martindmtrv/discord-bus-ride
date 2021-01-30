@@ -34,6 +34,7 @@ async def on_message(message):
             client.isPlaying = True
             client.player = message.author
             client.game = rb.ride_the_bus_game()
+            client.hasWon = False
 
             await message.channel.send(f"Its time to play {client.player}")
 
@@ -49,9 +50,6 @@ async def on_message(message):
             while client.isPlaying:
                 # black or red phase
                 card = client.game.draw_card()
-
-                print(card.name)
-
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Black or red")
 
@@ -59,28 +57,27 @@ async def on_message(message):
                 await msg.add_reaction("🔴")
 
                 try:
-                    await message.channel.send("**** You have 60 seconds to react with your answer ****")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
 
                     # check make sure game still going
                     if client.isPlaying:
-                        print(card.image_path)
-                        f = discord.File(open(card.image_path))
-                        await message.channel.send("", file=f)
+                        f = open(card.image_path, "rb")
+                        df = discord.File(f)
+                        await message.channel.send("", file=df)
                         f.close()
                         if client.game.black_or_red(reaction.emoji == "🔴"):
-                            await message.channel.send(f"Good job")
+                            pass
                         else:
-                            await message.channel.send("get fuked")
+                            await message.channel.send("***🍻🍻 Drink 🍻🍻***")
                             continue
                 except:
-                    client.isPlaying = False
-                    await message.channel.send("Too slow game ended!")
+                    if client.isPlaying:
+                        client.isPlaying = False
+                        await message.channel.send("Too slow game ended!")
+                        break
 
                 # higher or lower
                 card = client.game.draw_card()
-
-                print(card.name)
 
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Higher or lower")
@@ -89,26 +86,27 @@ async def on_message(message):
                 await msg.add_reaction("⬇️")
 
                 try:
-                    await message.channel.send("**** You have 60 seconds to react with your answer ****")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
 
                     # check make sure game still going
                     if client.isPlaying:
-                        f = discord.File(open(card.image_path))
-                        await message.channel.send("", file=f)
+                        f = open(card.image_path, "rb")
+                        df = discord.File(f)
+                        await message.channel.send("", file=df)
                         f.close()
                         if client.game.higher_or_lower(reaction.emoji == "⬆️"):
-                            await message.channel.send(f"Good job")
+                            pass
                         else:
-                            await message.channel.send("get fuked")
+                            await message.channel.send("***🍻🍻 Drink 🍻🍻***")
                             continue
                 except:
-                    client.isPlaying = False
-                    await message.channel.send("Too slow game ended!")
+                    if client.isPlaying:
+                        client.isPlaying = False
+                        await message.channel.send("Too slow game ended!")
+                        break
 
                 # in between or outside
                 card = client.game.draw_card()
-                print(card.name)
 
                 client.game.table.append(card)
                 msg = await message.channel.send(f"In between or outside (or posts)")
@@ -118,26 +116,27 @@ async def on_message(message):
                 await msg.add_reaction("💈")
 
                 try:
-                    await message.channel.send("**** You have 60 seconds to react with your answer ****")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
 
                     # check make sure game still going
                     if client.isPlaying:
-                        f = discord.File(open(card.image_path))
-                        await message.channel.send("", file=f)
+                        f = open(card.image_path, "rb")
+                        df = discord.File(f)
+                        await message.channel.send("", file=df)
                         f.close()
                         if client.game.inbetween_outside(0 if reaction.emoji == "📥" else 1 if reaction.emoji == "📤" else 2):
-                            await message.channel.send(f"Good job")
+                            pass
                         else:
-                            await message.channel.send("get fuked")
+                            await message.channel.send("***🍻🍻 Drink 🍻🍻***")
                             continue
                 except:
-                    client.isPlaying = False
-                    await message.channel.send("Too slow game ended!")
+                    if client.isPlaying:
+                        client.isPlaying = False
+                        await message.channel.send("Too slow game ended!")
+                        break
 
                 # final layer
                 card = client.game.draw_card()
-                print(card.name)
 
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Pick suit")
@@ -146,26 +145,31 @@ async def on_message(message):
                 await msg.add_reaction("❤️")
                 await msg.add_reaction("♦️")
                 await msg.add_reaction("♣️")
+                valid = ["♠️", "❤️", "♦️", "♣️"]
 
                 try:
-                    await message.channel.send("**** You have 60 seconds to react with your answer ****")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
 
                     # check make sure game still going
                     if client.isPlaying:
-                        f = discord.File(open(card.image_path))
-                        await message.channel.send("", file=f)
+                        f = open(card.image_path, "rb")
+                        df = discord.File(f)
+                        await message.channel.send("", file=df)
                         f.close()
-                        if client.game.inbetween_outside(0 if reaction.emoji == "♠️" else 1 if reaction.emoji == "❤️" else 2 if reaction.emoji == "♦️" else 3):
-                            await message.channel.send(f"You win")
+                        if client.game.suit(valid.index(reaction.emoji)):
+                            await message.channel.send(f"***🎊🎊 You win 🎊🎊***")
+                            client.hasWon = True
                             client.isPlaying = False
                         else:
-                            await message.channel.send("get fuked")
+                            await message.channel.send("***🍻🍻 Drink 🍻🍻***")
                             continue
                 except:
-                    client.isPlaying = False
-                    await message.channel.send("Too slow game ended!")
-        await message.channel.send("Got off bus after " + str(client.game.number_decks) + " decks and " + str(client.game.trys) + " trys")
+                    if client.isPlaying:
+                        client.isPlaying = False
+                        await message.channel.send("Too slow game ended!")
+                        break
+        if client.hasWon:
+            await message.channel.send("Got off bus after " + str(client.game.number_decks) + " decks and " + str(client.game.trys) + " trys")
 
     elif client.isPlaying and message.author == client.player and message.content.startswith("~quit"):
         client.isPlaying = False

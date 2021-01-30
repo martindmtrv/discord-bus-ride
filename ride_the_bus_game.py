@@ -4,6 +4,7 @@ from deck_of_cards import deck_of_cards
 suits_set = {0: "S", 1: "H", 2: "D", 3: "C"}
 ranks = {1: "A", 11: "J", 12: "Q", 13: "K"}
 
+
 class ride_the_bus_game:
     suits = {"S": 0, "H": 1, "D": 2, "C": 3}
     black_cards = [0, 3]
@@ -90,10 +91,10 @@ class ride_the_bus_game:
         if len(self.deck_obj.deck) == 0:
             self.deck_obj = deck_of_cards.DeckOfCards()
             self.number_decks += 1
-        card = self.deck_obj.give_random_card() 
-        card.image_path = "/PNG/" + \
-        str(card.rank if ranks.get(card.rank) is None else ranks.get(
-            card.rank)) + suits_set.get(card.suit) + ".png"
+        card = self.deck_obj.give_random_card()
+        card.image_path = "./PNG/" + \
+            str(card.rank if ranks.get(card.rank) is None else ranks.get(
+                card.rank)) + suits_set.get(card.suit) + ".png"
         if card.rank == 1:
             card.value = 14
         return card
@@ -118,7 +119,9 @@ class ride_the_bus_game:
                         print(self.table[3].image_path)
                         if(self.suit(self.suits.get("H"))):
                             playing = False
-        print("got off bus after " + str(self.number_decks) + " decks and " + str(self.trys) + " trys")
+        print("got off bus after " + str(self.number_decks) +
+              " decks and " + str(self.trys) + " trys")
+
 
 if __name__ == "__main__":
     game = ride_the_bus_game()
