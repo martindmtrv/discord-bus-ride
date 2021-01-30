@@ -64,9 +64,10 @@ async def on_message(message):
 
                     # check make sure game still going
                     if client.isPlaying:
-                        # f = discord.File(open(card.image_path))
-                        # await message.channel.send("", file=f)
-                        # f.close()
+                        print(card.image_path)
+                        f = discord.File(open(card.image_path))
+                        await message.channel.send("", file=f)
+                        f.close()
                         if client.game.black_or_red(reaction.emoji == "🔴"):
                             await message.channel.send(f"Good job")
                         else:
@@ -93,9 +94,9 @@ async def on_message(message):
 
                     # check make sure game still going
                     if client.isPlaying:
-                        # f = discord.File(open(card.image_path))
-                        # await message.channel.send("", file=f)
-                        # f.close()
+                        f = discord.File(open(card.image_path))
+                        await message.channel.send("", file=f)
+                        f.close()
                         if client.game.higher_or_lower(reaction.emoji == "⬆️"):
                             await message.channel.send(f"Good job")
                         else:
@@ -122,9 +123,9 @@ async def on_message(message):
 
                     # check make sure game still going
                     if client.isPlaying:
-                        # f = discord.File(open(card.image_path))
-                        # await message.channel.send("", file=f)
-                        # f.close()
+                        f = discord.File(open(card.image_path))
+                        await message.channel.send("", file=f)
+                        f.close()
                         if client.game.inbetween_outside(0 if reaction.emoji == "📥" else 1 if reaction.emoji == "📤" else 2):
                             await message.channel.send(f"Good job")
                         else:
@@ -152,9 +153,9 @@ async def on_message(message):
 
                     # check make sure game still going
                     if client.isPlaying:
-                        # f = discord.File(open(card.image_path))
-                        # await message.channel.send("", file=f)
-                        # f.close()
+                        f = discord.File(open(card.image_path))
+                        await message.channel.send("", file=f)
+                        f.close()
                         if client.game.inbetween_outside(0 if reaction.emoji == "♠️" else 1 if reaction.emoji == "❤️" else 2 if reaction.emoji == "♦️" else 3):
                             await message.channel.send(f"You win")
                             client.isPlaying = False
