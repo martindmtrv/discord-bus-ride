@@ -2,7 +2,7 @@
 import os
 import discord
 from dotenv import load_dotenv
-import "ride_the_bus_game.py"
+import ride_the_bus_game as rb
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -33,13 +33,9 @@ async def on_message(message):
             # enter game loop
             client.isPlaying = True
             client.player = message.author
-            client.game = ride_the_bus_game()
+            client.game = rb.ride_the_bus_game()
 
-            f = discord.File(open(".gitignore"))
-
-            await message.channel.send(f"Its time to play {client.player}", files=[f])
-
-            f.close()
+            await message.channel.send(f"Its time to play {client.player}")
 
             # options
             reactions = ["🔴", "⚫", "♦️",
@@ -48,22 +44,32 @@ async def on_message(message):
 
             def check(reaction, user):
                 # need to have the available options
-                return user == client.player and reaction in reactions
+                return user == client.player and reaction.emoji in reactions
 
             while client.isPlaying:
+                # black or red phase
+                card = client.game.draw_card()
+
+                client.game.table.append(card)
                 msg = await message.channel.send(f"Black or red")
 
                 await msg.add_reaction("🔴")
                 await msg.add_reaction("⚫")
 
                 try:
-                    await message.channel.send("You have 60 seconds to react with your answer")
+                    await message.channel.send("**** You have 60 seconds to react with your answer ****")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
 
                     # check make sure game still going
                     if client.isPlaying:
-                        client.game.black_or_red(reaction == "🔴")
-
+                        # f = discord.File(open(card.image_path))
+                        # await message.channel.send("", file=f)
+                        # f.close()
+                        if client.game.black_or_red(reaction.emoji == "🔴"):
+                            await message.channel.send(f"Good job")
+                        else:
+                            await message.channel.send("get fuked")
+                            continue
                 except:
                     client.isPlaying = False
                     await message.channel.send("Too slow game ended!")
