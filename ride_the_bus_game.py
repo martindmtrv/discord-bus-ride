@@ -32,7 +32,6 @@ class ride_the_bus_game:
             return True
         else:
             return False
-            print("Get Fucked")
             self.table.clear()
             self.trys += 1
 
@@ -47,7 +46,6 @@ class ride_the_bus_game:
             return True
         else:
             return False
-            print("Get Fucked")
             self.table.clear()
             self.trys += 1
 
@@ -71,7 +69,6 @@ class ride_the_bus_game:
             return True
         else:
             return False
-            print("Get Fucked")
             self.table.clear()
             self.trys += 1
 
@@ -86,7 +83,6 @@ class ride_the_bus_game:
             return True
         else:
             return False
-            print("Get Fucked")
             self.table.clear()
             self.trys += 1
 
