@@ -36,6 +36,8 @@ class ride_the_bus_game:
             return True
         else:
             return False
+            self.table.clear()
+            self.trys += 1
 
     """
     chooseHigher is True for higher
@@ -49,6 +51,8 @@ class ride_the_bus_game:
             return True
         else:
             return False
+            self.table.clear()
+            self.trys += 1
 
     """
     choice is 0 it is inbetween
@@ -71,6 +75,8 @@ class ride_the_bus_game:
             return True
         else:
             return False
+            self.table.clear()
+            self.trys += 1
 
     """
     choice is 0 for Spades
@@ -84,6 +90,8 @@ class ride_the_bus_game:
             return True
         else:
             return False
+            self.table.clear()
+            self.trys += 1
 
     def draw_card(self):
         if len(self.deck_obj.deck) == 0:
@@ -107,25 +115,7 @@ class ride_the_bus_game:
                         print(self.table[3].image_path)
                         if(self.suit(self.suits.get("H"))):
                             playing = False
-                        else:
-                            print("Get Fucked")
-                            self.table.clear()
-                            self.trys += 1
-                    else:
-                        print("Get Fucked")
-                        self.table.clear()
-                        self.trys += 1
-                else:
-                    print("Get Fucked")
-                    self.table.clear()
-                    self.trys += 1
-            else:
-                print("Get Fucked")
-                self.table.clear()
-                self.trys += 1
-        print("got off bus after " + str(self.number_decks) +
-              " decks and " + str(self.trys) + " trys")
-
+        print("got off bus after " + str(self.number_decks) + " decks and " + str(self.trys) + " trys")
 
 if __name__ == "__main__":
     game = ride_the_bus_game()
