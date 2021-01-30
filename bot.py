@@ -176,7 +176,7 @@ async def on_message(message):
         if client.hasWon[message.guild.id]:
             await message.channel.send("Got off bus after " + str(client.game[message.guild.id].number_decks) + " decks and " + str(client.game[message.guild.id].trys) + " trys")
 
-    elif client.isPlaying.get(message.guild.id) and message.author == client.player and message.content.startswith("~quit"):
+    elif client.isPlaying.get(message.guild.id) and message.author == client.player[message.guild.id] and message.content.startswith("~quit"):
         client.isPlaying[message.guild.id] = False
         await message.channel.send("He's done")
     elif message.content.startswith("~help"):
