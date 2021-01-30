@@ -1,5 +1,7 @@
 # discord-bus-ride
 
+A discord server party game, bot playing card games
+
 # installation note
 
 to install dependencies
