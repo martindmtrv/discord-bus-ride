@@ -50,6 +50,8 @@ async def on_message(message):
                 # black or red phase
                 card = client.game.draw_card()
 
+                print(card.name)
+
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Black or red")
 
@@ -77,6 +79,8 @@ async def on_message(message):
                 # higher or lower
                 card = client.game.draw_card()
 
+                print(card.name)
+
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Higher or lower")
 
@@ -103,6 +107,7 @@ async def on_message(message):
 
                 # in between or outside
                 card = client.game.draw_card()
+                print(card.name)
 
                 client.game.table.append(card)
                 msg = await message.channel.send(f"In between or outside (or posts)")
@@ -131,6 +136,7 @@ async def on_message(message):
 
                 # final layer
                 card = client.game.draw_card()
+                print(card.name)
 
                 client.game.table.append(card)
                 msg = await message.channel.send(f"Pick suit")
