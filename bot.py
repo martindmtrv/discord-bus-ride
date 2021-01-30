@@ -7,6 +7,7 @@ import ride_the_bus_game as rb
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+GUID2 = os.getenv('DISCORD_GUILD2')
 
 client = discord.Client()
 
@@ -14,11 +15,11 @@ client = discord.Client()
 @client.event
 async def on_ready():
     client.isPlaying = False
-    guild = discord.utils.find(lambda g: g.name == GUILD, client.guilds)
-    print(
-        f'{client.user} is connected to the following guild:\n'
-        f'{guild.name}(id: {guild.id})'
-    )
+    for g in client.guilds:
+        print(
+            f'{client.user} is connected to the following guilds:\n'
+            f'{g.name}(id: {g.id})'
+        )
 
 
 @client.event
