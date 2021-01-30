@@ -35,9 +35,9 @@ class ride_the_bus_game:
         elif not chooseRed and self.table[0].suit in self.black_cards:
             return True
         else:
-            return False
             self.table.clear()
             self.trys += 1
+            return False
 
     """
     chooseHigher is True for higher
@@ -50,9 +50,9 @@ class ride_the_bus_game:
         elif self.table[0].value > self.table[1].value and not chooseHigher:
             return True
         else:
-            return False
             self.table.clear()
             self.trys += 1
+            return False
 
     """
     choice is 0 it is inbetween
@@ -74,9 +74,9 @@ class ride_the_bus_game:
         elif self.table[2].value == lower and self.table[2].value == higher and choice == 2:
             return True
         else:
-            return False
             self.table.clear()
             self.trys += 1
+            return False
 
     """
     choice is 0 for Spades
@@ -89,9 +89,9 @@ class ride_the_bus_game:
         if self.table[3].suit == choice:
             return True
         else:
-            return False
             self.table.clear()
             self.trys += 1
+            return False
 
     def draw_card(self):
         if len(self.deck_obj.deck) == 0:
@@ -101,22 +101,24 @@ class ride_the_bus_game:
 
     def ride_the_bus(self):
         playing = True
+        print("playing")
         while playing:
             self.table.append(self.draw_card())
-            print(self.table[0].image_path)
+            print(self.table[0].name)
             if(self.black_or_red(False)):
                 self.table.append(self.draw_card())
-                print(self.table[1].image_path)
+                print(self.table[1].name)
                 if(self.higher_or_lower(True)):
                     self.table.append(self.draw_card())
-                    print(self.table[2].image_path)
+                    print(self.table[2].name)
                     if(self.inbetween_outside(0)):
                         self.table.append(self.draw_card())
-                        print(self.table[3].image_path)
+                        print(self.table[3].name)
                         if(self.suit(self.suits.get("H"))):
                             playing = False
         print("got off bus after " + str(self.number_decks) + " decks and " + str(self.trys) + " trys")
 
 if __name__ == "__main__":
+    print("test")
     game = ride_the_bus_game()
     game.ride_the_bus()
