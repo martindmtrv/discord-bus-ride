@@ -1,19 +1,22 @@
 from deck_of_cards import deck_of_cards
 
-#creating picture path
-suits = {0:"S", 1:"H", 2:"D", 3:"C"}
-ranks = {1:"A", 11:"J", 12:"Q", 13:"K"}
+# creating picture path
+suits = {0: "S", 1: "H", 2: "D", 3: "C"}
+ranks = {1: "A", 11: "J", 12: "Q", 13: "K"}
 for suit in range(4):
-    for rank in range(1,14):
+    for rank in range(1, 14):
         card = deck_of_cards.Card((suit, rank))
-        card.image_path = "/PNG/"+  str(rank if ranks.get(rank) is None else ranks.get(rank)) + suits.get(suit)+ ".png"
+        card.image_path = "/PNG/" + \
+            str(rank if ranks.get(rank) is None else ranks.get(
+                rank)) + suits.get(suit) + ".png"
         if rank == 1:
             card.value = 14
 
+
 class ride_the_bus_game:
-    suits = {"S":0, "H":1, "D":2, "C":3}
-    black_cards = [0,3]
-    red_cards = [1,2]
+    suits = {"S": 0, "H": 1, "D": 2, "C": 3}
+    black_cards = [0, 3]
+    red_cards = [1, 2]
 
     def __init__(self):
         self.table = []
@@ -25,6 +28,7 @@ class ride_the_bus_game:
     chooseRed is True for Red
     chooseRed is False for Black
     """
+
     def black_or_red(self, chooseRed):
         if chooseRed and self.table[0].suit in self.red_cards:
             return True
@@ -39,6 +43,7 @@ class ride_the_bus_game:
     chooseHigher is True for higher
     chooseHigher is False for lower
     """
+
     def higher_or_lower(self, chooseHigher):
         if self.table[0].value < self.table[1].value and chooseHigher:
             return True
@@ -54,6 +59,7 @@ class ride_the_bus_game:
     choice is 1 it is outside
     choice is 2 it is posts
     """
+
     def inbetween_outside(self, choice):
         if self.table[0].value > self.table[1].value:
             higher = self.table[0].value
@@ -78,6 +84,7 @@ class ride_the_bus_game:
     choice is 2 for Diamonds
     choice is 3 for Clubs
     """
+
     def suit(self, choice):
         if self.table[3].suit == choice:
             return True
@@ -110,5 +117,6 @@ class ride_the_bus_game:
                             playing = False
         print("got off bus after " + str(self.number_decks) + " decks and " + str(self.trys) + " trys")
 
-game = ride_the_bus_game()
-game.ride_the_bus()
+if __name__ == "__main__":
+    game = ride_the_bus_game()
+    game.ride_the_bus()

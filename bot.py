@@ -2,6 +2,7 @@
 import os
 import discord
 from dotenv import load_dotenv
+import "ride_the_bus_game.py"
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -32,6 +33,7 @@ async def on_message(message):
             # enter game loop
             client.isPlaying = True
             client.player = message.author
+            client.game = ride_the_bus_game()
 
             f = discord.File(open(".gitignore"))
 
@@ -39,26 +41,29 @@ async def on_message(message):
 
             f.close()
 
+            # options
+            reactions = ["🔴", "⚫", "♦️",
+                         "♠️", "♣️", "❤️",
+                         "⬆️", "⬇️", "📥", "📤"]
+
+            def check(reaction, user):
+                # need to have the available options
+                return user == client.player and reaction in reactions
+
             while client.isPlaying:
-                message = await message.channel.send("Question")
+                msg = await message.channel.send(f"Black or red")
 
-                # options
-                reactions = ["🔴", "⚫", "♦️",
-                             "♠️", "♣️", "❤️",
-                             "⬆️", "⬇️", "📥", "📤"]
-
-                for reaction in reactions:
-                    await message.add_reaction(reaction)
-
-                def check(reaction, user):
-                    # need to have the available options
-                    return user == client.player
+                await msg.add_reaction("🔴")
+                await msg.add_reaction("⚫")
 
                 try:
                     await message.channel.send("You have 60 seconds to react with your answer")
                     reaction, user = await client.wait_for("reaction_add", timeout=60, check=check)
+
                     # check make sure game still going
-                    await message.channel.send(f"Got {reaction} from {client.player}")
+                    if client.isPlaying:
+                        client.game.black_or_red(reaction == "🔴")
+
                 except:
                     client.isPlaying = False
                     await message.channel.send("Too slow game ended!")
